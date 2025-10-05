@@ -2,7 +2,7 @@
 
 namespace TodoList.Models
 {
-    class TodoTask
+    public class TodoTask
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; private set; }

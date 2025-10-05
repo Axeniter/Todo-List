@@ -1,6 +1,6 @@
 ﻿namespace TodoList.Models
 {
-    enum TodoTaskStatus
+    public enum TodoTaskStatus
     {
         Pending,
         Completed,

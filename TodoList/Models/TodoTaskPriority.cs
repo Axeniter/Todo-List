@@ -1,6 +1,6 @@
 ﻿namespace TodoList.Models
 {
-    enum TodoTaskPriority
+    public enum TodoTaskPriority
     {
         High,
         Medium,

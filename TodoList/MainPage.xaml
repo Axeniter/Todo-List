@@ -1,13 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TodoList.MainPage">
-    <Grid RowDefinitions="*, Auto" Padding="20">
-        <CollectionView Grid.Row="0">
-            
+             xmlns:models="clr-namespace:TodoList.Models"
+             xmlns:viewmodels="clr-namespace:TodoList.ViewModels"
+             xmlns:converters="clr-namespace:TodoList.Converters"
+             x:Class="TodoList.MainPage"
+             x:DataType="viewmodels:MainViewModel">
+
+    <Grid RowDefinitions="*, Auto" Padding="10">
+        <CollectionView Grid.Row="0" ItemsSource="{Binding Tasks}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="2.5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:TodoTask">
+                    <Border>
+                        <Grid ColumnDefinitions="*, auto">
+                            <StackLayout Spacing="5" Grid.Column="0">
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Description}"/>
+
+                                <HorizontalStackLayout Spacing="15">
+                                    <Label Text="{Binding Tag, StringFormat='#{0}'}" FontAttributes="Italic"/>
+                                    <Label Text="{Binding DueTime, StringFormat='{0:dd/MM/yyyy HH:mm}'}"/>
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                            <HorizontalStackLayout Spacing="0" Grid.Column="1">
+                                <CheckBox Color="{Binding Priority, Converter={converters:PriorityToColorConverter}}"/>
+                                <Button Style="{StaticResource DeleteButton}" Text="x" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
+                                    Path=BindingContext.DeleteTaskCommand}" CommandParameter="{Binding .}"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
         </CollectionView>
         <Button Grid.Row="1" Text="Добавить задачу" Style="{StaticResource AddButton}"/>
     </Grid>
-    
-
 </ContentPage>
