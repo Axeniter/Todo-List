@@ -5,14 +5,16 @@ namespace TodoList.Models
     public class TodoTask
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; private set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Tag { get; set; }
-        public DateTime DueTime { get; set; }
-        public TodoTaskPriority Priority { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; } = "Новая задача";
+        public string Description { get; set; } = string.Empty;
+        public string Tag { get; set; } = "Входящие";
+        public DateTime DueTime { get; set; } = DateTime.Today.AddHours(23).AddMinutes(59);
+        public TodoTaskPriority Priority { get; set; } = TodoTaskPriority.None;
         public TodoTaskStatus Status { get; set; } = TodoTaskStatus.Pending;
 
+        public TodoTask()
+        { }
         public TodoTask(string name, string description, string tag, DateTime dueTime, TodoTaskPriority priority)
         {
             Name = name;
