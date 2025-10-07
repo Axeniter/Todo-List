@@ -30,7 +30,7 @@ namespace TodoList.Models
             }
         }
 
-        public Task DeleteItem(TodoTask item)
+        public Task<int> DeleteItem(TodoTask item)
         {
             return _connection.DeleteAsync(item);
         }

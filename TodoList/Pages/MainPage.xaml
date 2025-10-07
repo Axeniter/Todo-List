@@ -4,7 +4,7 @@
              xmlns:models="clr-namespace:TodoList.Models"
              xmlns:viewmodels="clr-namespace:TodoList.ViewModels"
              xmlns:converters="clr-namespace:TodoList.Converters"
-             x:Class="TodoList.MainPage"
+             x:Class="TodoList.Pages.MainPage"
              x:DataType="viewmodels:MainViewModel">
     <ContentPage.Resources>
         <DataTemplate x:Key ="Task" x:DataType="models:TodoTask">
@@ -29,12 +29,19 @@
             </Border>
         </DataTemplate>
     </ContentPage.Resources>
-    <Grid RowDefinitions="*, Auto" Padding="10">
-        <CollectionView Grid.Row="0" ItemsSource="{Binding Tasks}" ItemTemplate="{StaticResource Task}">
+    <Grid RowDefinitions="Auto, *, Auto" Padding="10">
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" VerticalOptions="Center"
+    HorizontalOptions="Center">
+            <Label Text="По статусу:"/>
+            <Picker Style="{StaticResource FilterPicker}"/>
+            <Label Text="По категории:"/>
+            <Picker Style="{StaticResource FilterPicker}"/>
+        </HorizontalStackLayout>
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Tasks}" ItemTemplate="{StaticResource Task}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="2.5"/>
             </CollectionView.ItemsLayout>
         </CollectionView>
-        <Button Grid.Row="1" Text="Добавить задачу" Style="{StaticResource AddButton}"/>
+        <Button Grid.Row="2" Text="Добавить задачу" Style="{StaticResource AddButton}" Clicked="OnAddButtonClicked"/>
     </Grid>
 </ContentPage>

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using TodoList.Models;
 using System.Linq;
+using System.Diagnostics;
 
 namespace TodoList.ViewModels
 {
@@ -23,5 +24,6 @@ namespace TodoList.ViewModels
         {
             Tasks.Remove(task);
         }
+
     }
 }
