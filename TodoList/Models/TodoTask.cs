@@ -22,16 +22,27 @@ namespace TodoList.Models
             Tag = tag;
             DueTime = dueTime;
             Priority = priority;
+            TryOverDue();
         }
 
-        public void CompleteTask()
+        public bool TryComplete()
         {
-            if (Status == TodoTaskStatus.Pending) Status = TodoTaskStatus.Completed;
+            if (Status == TodoTaskStatus.Pending)
+            {
+                Status = TodoTaskStatus.Completed;
+                return true;
+            }
+            return false;
         }
 
-        public void CheckOverDue()
+        public bool TryOverDue()
         {
-            if (DateTime.Now > DueTime) Status = TodoTaskStatus.OverDue;
+            if (DateTime.Now > DueTime)
+            {
+                Status = TodoTaskStatus.OverDue;
+                return true;
+            }
+            return false;
         }
     }
 }
