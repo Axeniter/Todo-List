@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using TodoList.Messages;
 using TodoList.Models;
 
@@ -81,9 +80,10 @@ namespace TodoList.ViewModels
 
             foreach (var task in tasksToOverDue)
             {
-                await _todoTaskData.SaveItem(task);
+                await _todoTaskData.SaveItem(task); 
                 OverDueTasks.Add(task);
                 PendingTasks.Remove(task);
+                _ = ShowOverdueNotification(task);
             }
         }
         private async Task OverDueChecker()
@@ -142,6 +142,17 @@ namespace TodoList.ViewModels
                     CompletedTasks.Add(task);
                     break;
             }
+        }
+
+        private async Task ShowOverdueNotification(TodoTask task)
+        {
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "⚠️ Задача просрочена",
+                    $"Задача \"{task.Name}\" просрочена!\nСрок: {task.DueTime:dd/MM/yyyy HH:mm}",
+                    "Понятно");
+            });
         }
 
         ~MainViewModel()
