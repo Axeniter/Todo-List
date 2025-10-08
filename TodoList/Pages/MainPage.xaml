@@ -9,6 +9,13 @@
     <ContentPage.Resources>
         <DataTemplate x:Key ="Task" x:DataType="models:TodoTask">
             <Border>
+                <Border.IsVisible>
+                    <MultiBinding Converter="{converters:TagFilterToVisibilityMultiConverter}">
+                        <Binding Path="Tag"/>
+                        <Binding Path="BindingContext.CurrentTagFilter" 
+                             Source="{RelativeSource AncestorType={x:Type ContentPage}}"/>
+                    </MultiBinding>
+                </Border.IsVisible>
                 <Grid ColumnDefinitions="*, auto">
                     <StackLayout Spacing="5" Grid.Column="0">
                         <Label Text="{Binding Name}" FontAttributes="Bold"/>
@@ -37,24 +44,24 @@
             <Picker Style="{StaticResource FilterPicker}" ItemsSource="{Binding Tags}" 
                     SelectedItem="{Binding CurrentTagFilter, Mode=TwoWay}"/>
         </HorizontalStackLayout>
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1" Padding="10">
             <VerticalStackLayout Spacing="5">
                 <Label Text="Незавершенные" Style="{StaticResource HeaderLabel}"/>
                 <CollectionView ItemsSource="{Binding PendingTasks}" ItemTemplate="{StaticResource Task}">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="2.5"/>
+                        <LinearItemsLayout Orientation="Vertical"/>
                     </CollectionView.ItemsLayout>
                 </CollectionView>
                 <Label Text="Просроченные" Style="{StaticResource HeaderLabel}"/>
                 <CollectionView ItemsSource="{Binding OverDueTasks}" ItemTemplate="{StaticResource Task}">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="2.5"/>
+                        <LinearItemsLayout Orientation="Vertical"/>
                     </CollectionView.ItemsLayout>
                 </CollectionView>
                 <Label Text="Завершенные" Style="{StaticResource HeaderLabel}"/>
                 <CollectionView ItemsSource="{Binding CompletedTasks}" ItemTemplate="{StaticResource Task}">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="2.5"/>
+                        <LinearItemsLayout Orientation="Vertical"/>
                     </CollectionView.ItemsLayout>
                 </CollectionView>
             </VerticalStackLayout>

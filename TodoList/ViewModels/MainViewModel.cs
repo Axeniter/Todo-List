@@ -50,9 +50,29 @@ namespace TodoList.ViewModels
         [RelayCommand]
         private async Task UpdateTags()
         {
-            var tags = await _todoTaskData.GetAllTags();
-            Tags = new(tags);
-            Tags.Insert(0, "Все");
+            var newTags = await _todoTaskData.GetAllTags();
+            var currentSelectedTag = CurrentTagFilter;
+
+            var tagsToRemove = Tags.Skip(1).Where(oldTag => !newTags.Contains(oldTag)).ToList();
+            foreach (var tagToRemove in tagsToRemove)
+            {
+                Tags.Remove(tagToRemove);
+            }
+
+            var tagsToAdd = newTags.Where(newTag => !Tags.Contains(newTag)).ToList();
+            foreach (var tagToAdd in tagsToAdd)
+            {
+                Tags.Add(tagToAdd);
+            }
+
+            if (currentSelectedTag != null && Tags.Contains(currentSelectedTag))
+            {
+                CurrentTagFilter = currentSelectedTag;
+            }
+            else
+            {
+                CurrentTagFilter = "Все";
+            }
         }
 
         private async Task CheckOverDue()
@@ -62,8 +82,8 @@ namespace TodoList.ViewModels
             foreach (var task in tasksToOverDue)
             {
                 await _todoTaskData.SaveItem(task);
-                PendingTasks.Remove(task);
                 OverDueTasks.Add(task);
+                PendingTasks.Remove(task);
             }
         }
         private async Task OverDueChecker()
@@ -81,8 +101,8 @@ namespace TodoList.ViewModels
             if (task.TryComplete())
             {
                 await _todoTaskData.SaveItem(task);
-                PendingTasks.Remove(task);
                 CompletedTasks.Add(task);
+                PendingTasks.Remove(task);
             }
         }
 
