@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:models="clr-namespace:TodoList.Models"
              xmlns:viewmodels="clr-namespace:TodoList.ViewModels"
              xmlns:converters="clr-namespace:TodoList.Converters"
@@ -9,10 +8,7 @@
              x:DataType="viewmodels:MainViewModel">
     <ContentPage.Resources>
         <DataTemplate x:Key ="Task" x:DataType="models:TodoTask">
-            <Border IsVisible="{Binding Tag, 
-                    Converter={converters:TagFilterToVisibilityConverter}, 
-                    ConverterParameter={Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
-                    Path=BindingContext.CurrentTagFilter}}">
+            <Border>
                 <Grid ColumnDefinitions="*, auto">
                     <StackLayout Spacing="5" Grid.Column="0">
                         <Label Text="{Binding Name}" FontAttributes="Bold"/>
@@ -24,19 +20,11 @@
                         </HorizontalStackLayout>
                     </StackLayout>
                     <HorizontalStackLayout Spacing="0" Grid.Column="1">
-                        <CheckBox IsEnabled="{Binding Status, Converter={converters:TaskStatusConverter}}" 
-                                  Color="{Binding Priority, Converter={converters:PriorityToColorConverter}}">
-                            <CheckBox.Behaviors>
-                                <toolkit:EventToCommandBehavior
-                                    EventName="CheckedChanged"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
-                                            Path=BindingContext.CompleteTaskCommand}"
-                                    CommandParameter="{Binding .}"/>
-                            </CheckBox.Behaviors>
-                        </CheckBox>
+                        <CheckBox  Color="{Binding Priority, Converter={converters:PriorityToColorConverter}}"
+                                  CheckedChanged="OnCheckBoxCheckedChanged"/>
                         <Button Style="{StaticResource DeleteButton}" Text="x" 
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
-                    Path=BindingContext.DeleteTaskCommand}" CommandParameter="{Binding .}"/>
+                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
+            Path=BindingContext.DeleteTaskCommand}" CommandParameter="{Binding .}"/>
                     </HorizontalStackLayout>
                 </Grid>
             </Border>
@@ -46,10 +34,11 @@
         <HorizontalStackLayout Grid.Row="0" Spacing="10" VerticalOptions="Center"
                                HorizontalOptions="Center">
             <Label Text="Фильтр:"/>
-            <Picker Style="{StaticResource FilterPicker}" ItemsSource="{Binding Tags}" SelectedItem="{Binding CurrentTagFilter, Mode=TwoWay}"/>
+            <Picker Style="{StaticResource FilterPicker}" ItemsSource="{Binding Tags}" 
+                    SelectedItem="{Binding CurrentTagFilter, Mode=TwoWay}"/>
         </HorizontalStackLayout>
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout>
+            <VerticalStackLayout Spacing="5">
                 <Label Text="Незавершенные" Style="{StaticResource HeaderLabel}"/>
                 <CollectionView ItemsSource="{Binding PendingTasks}" ItemTemplate="{StaticResource Task}">
                     <CollectionView.ItemsLayout>

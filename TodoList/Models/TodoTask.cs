@@ -11,7 +11,7 @@ namespace TodoList.Models
         public string Tag { get; set; }
         public DateTime DueTime { get; set; }
         public TodoTaskPriority Priority { get; set; }
-        public TodoTaskStatus Status { get; private set; } = TodoTaskStatus.Pending;
+        public TodoTaskStatus Status { get; set; }
 
         public TodoTask() : this("Новая задача", string.Empty, "Входящие",
             DateTime.Today.AddHours(23).AddMinutes(59), TodoTaskPriority.None) { }
@@ -22,6 +22,7 @@ namespace TodoList.Models
             Tag = tag;
             DueTime = dueTime;
             Priority = priority;
+            Status = TodoTaskStatus.Pending;
             TryOverDue();
         }
 

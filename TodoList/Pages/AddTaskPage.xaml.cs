@@ -17,12 +17,8 @@ namespace TodoList.Pages
 
 		private async void OnCloseRequested()
 		{
-			await CloseAsync();
-		}
-
-		~AddTaskPage() 
-		{
             WeakReferenceMessenger.Default.UnregisterAll(this);
-        }
+            await CloseAsync();
+		}
     }
 }

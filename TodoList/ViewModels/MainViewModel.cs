@@ -21,23 +21,21 @@ namespace TodoList.ViewModels
         [ObservableProperty]
         private ObservableCollection<TodoTask> _completedTasks;
         [ObservableProperty]
-        private ObservableCollection<string> _tags;
+        private ObservableCollection<string> _tags = new() {"Все"};
 
         public MainViewModel()
         {
             _todoTaskData = new TodoTaskDataBase();
-            LoadTasksCommand.Execute(null);
-            UpdateTagsCommand.Execute(null);
-
-            PendingTasks = new ObservableCollection<TodoTask>();
-            OverDueTasks = new ObservableCollection<TodoTask>();
-            CompletedTasks = new ObservableCollection<TodoTask>();
-            Tags = new ObservableCollection<string>();
 
             WeakReferenceMessenger.Default.Register<TaskCreatedMessage>(this, (recipient, message) 
                 => CreateTaskCommand.Execute(message.Value));
+            Task.Run(async () =>
+            {
+                await LoadTasks();
+                await UpdateTags();
+                _ = OverDueChecker();
+            });
             CurrentTagFilter = "Все";
-            _ = OverDueChecker();
         }
 
         [RelayCommand]

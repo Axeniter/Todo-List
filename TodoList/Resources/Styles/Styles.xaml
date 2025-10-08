@@ -65,13 +65,13 @@
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Style.Triggers>
             <DataTrigger TargetType="Label" 
-                     Binding="{Binding Text, Source={RelativeSource Self}}" 
-                     Value="">
+                 Binding="{Binding Text, Source={RelativeSource Self}}" 
+                 Value="">
                 <Setter Property="IsVisible" Value="False"/>
             </DataTrigger>
             <DataTrigger TargetType="Label" 
-                     Binding="{Binding Text, Source={RelativeSource Self}}" 
-                     Value="{x:Null}">
+                 Binding="{Binding Text, Source={RelativeSource Self}}" 
+                 Value="{x:Null}">
                 <Setter Property="IsVisible" Value="False"/>
             </DataTrigger>
         </Style.Triggers>

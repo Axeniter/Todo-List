@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Extensions;
 using TodoList.ViewModels;
+using TodoList.Models;
 
 namespace TodoList.Pages
 {
@@ -14,6 +15,15 @@ namespace TodoList.Pages
         public void OnAddButtonClicked(object sender, EventArgs e)
         {
             this.ShowPopup(new AddTaskPage());
+        }
+
+        private void OnCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            if (checkBox.BindingContext is TodoTask task && BindingContext is MainViewModel viewModel)
+            {
+                viewModel.CompleteTaskCommand.Execute(task);
+            }
         }
     }
 }
