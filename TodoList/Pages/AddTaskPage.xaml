@@ -28,7 +28,7 @@
                 <DatePicker Date="{Binding Date, Mode=TwoWay}"/>
                 <TimePicker Time="{Binding Time, Mode=TwoWay}"/>
             </HorizontalStackLayout>
-            <Button Text="Создать" Margin="5"/>
+            <Button Text="Создать" Margin="5" Command="{Binding MakeTaskCommand}"/>
         </VerticalStackLayout>
     </ScrollView>
 </mct:Popup>

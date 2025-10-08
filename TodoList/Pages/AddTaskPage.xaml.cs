@@ -1,6 +1,8 @@
 using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Threading.Tasks;
+using TodoList.Messages;
 using TodoList.ViewModels;
-using System.Diagnostics;
 
 namespace TodoList.Pages
 {
@@ -9,7 +11,18 @@ namespace TodoList.Pages
 		public AddTaskPage()
 		{
 			InitializeComponent();
-			BindingContext = new AddTaskViewModel();
+            BindingContext = new AddTaskViewModel();
+            WeakReferenceMessenger.Default.Register<ClosePopupMessage>(this, (recipient, message) => OnCloseRequested());
         }
-	}
+
+		private async void OnCloseRequested()
+		{
+			await CloseAsync();
+		}
+
+		~AddTaskPage() 
+		{
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
+    }
 }

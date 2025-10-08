@@ -6,15 +6,9 @@ namespace TodoList.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is string taskTag)
+            if (value is string taskTag && parameter is string currentFilter)
             {
-                if (parameter is string currentFilter)
-                {
-                    if (currentFilter == "Все" || taskTag == currentFilter)
-                    {
-                        return true;
-                    }
-                }
+                return currentFilter == "Все" || taskTag == currentFilter;
             }
             return false;
         }
