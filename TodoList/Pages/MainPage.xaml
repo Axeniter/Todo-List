@@ -35,7 +35,7 @@
             <Label Text="По статусу:"/>
             <Picker Style="{StaticResource FilterPicker}"/>
             <Label Text="По категории:"/>
-            <Picker Style="{StaticResource FilterPicker}"/>
+            <Picker Style="{StaticResource FilterPicker}" ItemsSource="{Binding Tags}"/>
         </HorizontalStackLayout>
         <CollectionView Grid.Row="1" ItemsSource="{Binding Tasks}" ItemTemplate="{StaticResource Task}">
             <CollectionView.ItemsLayout>

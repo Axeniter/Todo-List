@@ -23,5 +23,15 @@ namespace TodoList.Models
             DueTime = dueTime;
             Priority = priority;
         }
+
+        public void CompleteTask()
+        {
+            if (Status == TodoTaskStatus.Pending) Status = TodoTaskStatus.Completed;
+        }
+
+        public void CheckOverDue()
+        {
+            if (DateTime.Now > DueTime) Status = TodoTaskStatus.OverDue;
+        }
     }
 }

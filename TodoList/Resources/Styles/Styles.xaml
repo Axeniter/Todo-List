@@ -241,7 +241,7 @@
     </Style>
 
     <Style TargetType="Picker" x:Key="FilterPicker">
-        <Setter Property="HeightRequest" Value="22"/>
+        <Setter Property="HeightRequest" Value="28"/>
     </Style>
 
     <Style TargetType="Shadow">
