@@ -38,8 +38,9 @@ namespace TodoList.ViewModels
                 return;
             }
             var safeName = string.IsNullOrEmpty(Name) ? "Новая задача" : Name;
+            var safeDescription = string.IsNullOrEmpty(Description) ? "(без описания)" : Description;
             var safeTag = string.IsNullOrEmpty(Tag) ? "Входящие" : Tag;
-            var task = new TodoTask(safeName, Description, safeTag, Date + Time, Priority);
+            var task = new TodoTask(safeName, safeDescription, safeTag, Date + Time, Priority);
 
             WeakReferenceMessenger.Default.Send(new TaskCreatedMessage(task));
             WeakReferenceMessenger.Default.Send(new ClosePopupMessage());

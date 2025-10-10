@@ -23,6 +23,7 @@ namespace TodoList.Pages
             if (checkBox.BindingContext is TodoTask task && BindingContext is MainViewModel viewModel)
             {
                 viewModel.CompleteTaskCommand.Execute(task);
+                checkBox.IsChecked = false;
             }
         }
     }

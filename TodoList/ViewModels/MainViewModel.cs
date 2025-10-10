@@ -80,9 +80,9 @@ namespace TodoList.ViewModels
 
             foreach (var task in tasksToOverDue)
             {
-                await _todoTaskData.SaveItem(task); 
-                OverDueTasks.Add(task);
+                await _todoTaskData.SaveItem(task);
                 PendingTasks.Remove(task);
+                OverDueTasks.Add(task);
                 _ = ShowOverdueNotification(task);
             }
         }
@@ -101,8 +101,8 @@ namespace TodoList.ViewModels
             if (task.TryComplete())
             {
                 await _todoTaskData.SaveItem(task);
-                CompletedTasks.Add(task);
                 PendingTasks.Remove(task);
+                CompletedTasks.Add(task);
             }
         }
 
@@ -137,9 +137,6 @@ namespace TodoList.ViewModels
                     break;
                 case TodoTaskStatus.OverDue:
                     OverDueTasks.Add(task);
-                    break;
-                case TodoTaskStatus.Completed:
-                    CompletedTasks.Add(task);
                     break;
             }
         }

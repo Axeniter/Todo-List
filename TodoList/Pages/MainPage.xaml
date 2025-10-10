@@ -27,7 +27,8 @@
                         </HorizontalStackLayout>
                     </StackLayout>
                     <HorizontalStackLayout Spacing="0" Grid.Column="1">
-                        <CheckBox  Color="{Binding Priority, Converter={converters:PriorityToColorConverter}}"
+                        <CheckBox IsVisible="{Binding Status, Converter={converters:TaskStatusConverter}}" 
+                                  Color="{Binding Priority, Converter={converters:PriorityToColorConverter}}"
                                   CheckedChanged="OnCheckBoxCheckedChanged"/>
                         <Button Style="{StaticResource DeleteButton}" Text="x" 
                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, 
